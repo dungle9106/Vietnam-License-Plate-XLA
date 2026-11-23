@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gán nhãn biển số</title>
+<style>
+:root{
+  --bg:#f3f4f7; --panel:#ffffff; --ink:#1b1f24; --muted:#5d6670; --line:#e2e5ea;
+  --accent:#1f5fbf; --accent-ink:#ffffff; --ok:#1a7f37; --ok-bg:#e7f5ec; --warn:#b85c00; --warn-bg:#fff3e6;
+  --chip:#eef2f8; --stage:#0f1115; --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#111317; --panel:#1a1d22; --ink:#e7e9ec; --muted:#9aa3ad; --line:#2c3138;
+    --accent:#5b9bff; --accent-ink:#0b1220; --ok:#4cc26b; --ok-bg:#16301f; --warn:#ffa24d; --warn-bg:#3a2a18;
+    --chip:#252a31; --stage:#08090b; --shadow:none; }
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+button,input{font:inherit}
+header{background:var(--panel);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+h1{font-size:18px;margin:0;font-weight:650}
+.sub{color:var(--muted);font-size:12px}
+header a{margin-left:auto;color:var(--accent);text-decoration:none;font-size:13px}
+.prog{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.bar{flex:1;min-width:120px;height:6px;background:var(--chip);border-radius:3px;overflow:hidden}
+.bar>div{height:100%;background:var(--ok);width:0;transition:width .2s}
+.tabs{display:flex;gap:4px}
+.tabs button{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:4px 12px;border-radius:999px;cursor:pointer;font-size:13px}
+.tabs button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.work{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;padding:14px 16px}
+@media (max-width:900px){.work{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.main{padding:16px;display:flex;flex-direction:column;gap:14px}
+.stage{background:var(--stage);border-radius:10px;min-height:260px;display:flex;align-items:center;justify-content:center;padding:16px}
+.stage img{max-width:100%;max-height:46vh;min-height:150px;object-fit:contain;image-rendering:auto;border-radius:4px}
+.meta{font-size:12px;color:var(--muted);word-break:break-all}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hintline{font-size:13px;color:var(--muted)}
+.hintline b{color:var(--ink);font-family:Consolas,monospace}
+#text{flex:1;min-width:220px;font:700 30px/1.2 Consolas,"Cascadia Mono",monospace;letter-spacing:.04em;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);text-transform:uppercase}
+#text:focus{outline:none;border-color:var(--accent)}
+button.b{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:10px 16px;border-radius:10px;cursor:pointer}
+button.b:hover:not(:disabled){border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button:disabled{opacity:.45;cursor:default}
+.status{font-size:13px;padding:2px 10px;border-radius:999px;font-weight:600}
+.status.ok{background:var(--ok-bg);color:var(--ok)}
+.status.todo{background:var(--chip);color:var(--muted)}
+.status.warn{background:var(--warn-bg);color:var(--warn)}
+.keys{font-size:12px;color:var(--muted);line-height:1.9}
+kbd{font:11px Consolas,monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 5px;background:var(--chip);color:var(--ink)}
+.side{display:flex;flex-direction:column;max-height:calc(100vh - 150px);position:sticky;top:14px}
+.side h2{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0;padding:12px 14px;border-bottom:1px solid var(--line);font-weight:600}
+.list{overflow:auto;padding:8px;display:flex;flex-direction:column;gap:6px}
+.it{display:grid;grid-template-columns:96px 1fr auto;gap:10px;align-items:center;padding:6px;border:2px solid transparent;border-radius:8px;cursor:pointer;background:none;color:inherit;text-align:left}
+.it:hover{background:var(--chip)}
+.it.sel{border-color:var(--accent)}
+.it img{width:96px;height:40px;object-fit:contain;background:var(--chip);border-radius:4px}
+.it code{font:600 13px Consolas,monospace;word-break:break-all}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dot.ok{background:var(--ok)}.dot.q{background:var(--warn)}
+.empty{color:var(--muted);text-align:center;padding:40px 16px}
+.empty code{background:var(--chip);padding:2px 6px;border-radius:4px;font-size:12px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;opacity:0;transition:.2s;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Gán nhãn biển số</h1>
+    <div class="sub">Sửa đáp án cho từng biển · dùng để đo độ chính xác và tinh chỉnh PaddleOCR</div>
+  </div>
+  <a href="/">← Về trang nhận diện</a>
+</header>
+
+<div class="prog">
+  <span id="progText">Đang tải...</span>
+  <div class="bar"><div id="barv"></div></div>
+  <div class="tabs" id="tabs">
+    <button data-f="todo" class="on">Chưa kiểm tra</button>
+    <button data-f="done">Đã kiểm tra</button>
+    <button data-f="all">Tất cả</button>
+  </div>
+</div>
+
+<main class="work">
+  <section class="panel main" id="main">
+    <div class="empty" id="empty" hidden></div>
+    <div id="editor" hidden>
+      <div class="stage"><img id="crop" alt="Ảnh biển số cần gán nhãn"></div>
+      <div class="row" style="justify-content:space-between;margin-top:10px">
+        <span class="meta" id="src"></span>
+        <span class="status todo" id="status">Chưa kiểm tra</span>
+      </div>
+      <div class="hintline" style="margin-top:8px">PaddleOCR gợi ý: <b id="pred"></b></div>
+      <div class="row" style="margin-top:10px">
+        <input id="text" autocomplete="off" spellcheck="false" aria-label="Biển số đúng">
+        <button class="b primary" id="save">Lưu &amp; tiếp ↵</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="b" id="prev">‹ Trước</button>
+        <button class="b" id="next">Sau ›</button>
+        <button class="b" id="unread" title="Ảnh quá mờ / không phải biển số: bỏ qua khi đo">Không đọc được (?)</button>
+        <span style="flex:1"></span>
+        <span class="meta" id="pos"></span>
+      </div>
+      <div class="keys" style="margin-top:12px">
+        <kbd>Enter</kbd> lưu &amp; sang biển tiếp ·
+        <kbd>Esc</kbd> đánh dấu không đọc được ·
+        <kbd>Alt</kbd>+<kbd>←</kbd>/<kbd>→</kbd> biển trước / sau<br>
+        Gõ đủ ký tự theo thứ tự trên biển, dấu <b>-</b> và <b>.</b> có thể bỏ (vd <b>30E-931.05</b> hay <b>30E93105</b>).
+        Biển 2 dòng gõ liền dòng trên rồi dòng dưới (vd <b>29AB90175</b>).
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel side">
+    <h2 id="listTitle">Danh sách</h2>
+    <div class="list" id="list"></div>
+  </aside>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const S = { rows: [], filter: 'todo', cur: -1 };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cropUrl = r => '/labels/crop/' + encodeURIComponent(r.crop.split('/').pop());
+function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1800); }
+
+async function load(){
+  const d = await (await fetch('/api/labels')).json();
+  S.rows = d.rows; S.csv = d.csv;
+  const first = S.rows.findIndex(r => !r.checked);
+  S.cur = first >= 0 ? first : (S.rows.length ? 0 : -1);
+  render();
+}
+
+const visible = () => S.rows.filter(r => S.filter === 'all' || (S.filter === 'done') === r.checked);
+
+function render(){
+  const n = S.rows.length, done = S.rows.filter(r => r.checked).length;
+  $('#progText').textContent = n ? `Đã kiểm tra ${done} / ${n} biển` : 'Chưa có dữ liệu';
+  $('#barv').style.width = n ? (100 * done / n) + '%' : '0';
+  const V = visible();
+  $('#listTitle').textContent = `Danh sách (${V.length})`;
+  $('#list').innerHTML = V.length ? V.map(r => `
+    <button class="it ${r.i === S.cur ? 'sel' : ''}" data-i="${r.i}">
+      <img loading="lazy" src="${cropUrl(r)}" alt="">
+      <code>${esc(r.text || '—')}</code>
+      <span class="dot ${r.checked ? (r.text === '?' ? 'q' : 'ok') : ''}"></span>
+    </button>`).join('') : '<div class="empty">Không có biển nào trong mục này.</div>';
+  $('#list .sel')?.scrollIntoView({ block: 'nearest' });
+  renderEditor();
+}
+
+function renderEditor(){
+  const r = S.rows[S.cur];
+  if (!S.rows.length){
+    $('#editor').hidden = true; $('#empty').hidden = false;
+    $('#empty').innerHTML = `Chưa có ảnh biển số nào để gán nhãn.<br><br>Chạy lệnh tạo dữ liệu trước, ví dụ:<br><br>
+      <code>python scripts/export_ocr_labels.py --split test</code><br><br>
+      <code>python scripts/export_ocr_labels.py --video duong_dan_video.mp4</code><br><br>rồi tải lại trang này.`;
+    return;
+  }
+  if (S.filter === 'todo' && !visible().length){
+    $('#editor').hidden = true; $('#empty').hidden = false;
+    $('#empty').innerHTML = `Đã kiểm tra hết ${S.rows.length} biển. 🎉<br><br>Đo độ chính xác: <code>python scripts/eval_ocr.py</code><br><br>
+      Thêm biển mới: <code>python scripts/export_ocr_labels.py --video duong_dan_video.mp4</code> rồi tải lại trang.`;
+    return;
+  }
+  if (!r){ $('#editor').hidden = true; $('#empty').hidden = false; $('#empty').textContent = 'Chọn một biển trong danh sách.'; return; }
+  $('#editor').hidden = false; $('#empty').hidden = true;
+  $('#crop').src = cropUrl(r);
+  $('#src').textContent = `#${r.i + 1} · tập ${r.split === 'test' ? 'TEST (để đo)' : r.split + ' (để huấn luyện)'} · ${r.image}`;
+  $('#pred').textContent = r.pred || '(không đọc được)';
+  const st = $('#status');
+  st.className = 'status ' + (!r.checked ? 'todo' : r.text === '?' ? 'warn' : 'ok');
+  st.textContent = !r.checked ? 'Chưa kiểm tra' : r.text === '?' ? 'Không đọc được' : 'Đã kiểm tra';
+  const t = $('#text'); t.value = r.text === '?' ? '' : r.text; t.focus(); t.select();
+  const V = visible().map(x => x.i), k = V.indexOf(S.cur);
+  $('#pos').textContent = k >= 0 ? `${k + 1} / ${V.length} trong mục này` : '';
+  $('#prev').disabled = S.cur <= 0; $('#next').disabled = S.cur >= S.rows.length - 1;
+}
+
+function go(i){ if (i >= 0 && i < S.rows.length){ S.cur = i; render(); } }
+function nextTodo(from){
+  // Sau khi lưu: sang biển CHƯA kiểm tra kế tiếp (vòng lại từ đầu); hết thì sang biển kế
+  for (let k = 1; k <= S.rows.length; k++){ const j = (from + k) % S.rows.length; if (!S.rows[j].checked) return j; }
+  return Math.min(from + 1, S.rows.length - 1);
+}
+
+async function save(text){
+  const r = S.rows[S.cur]; if (!r) return;
+  text = text.trim().toUpperCase();
+  if (!text){ toast('Gõ biển số, hoặc bấm "Không đọc được"'); return; }
+  try {
+    const res = await fetch('/api/labels/' + r.i, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ text, checked: true }) });
+    const d = await res.json();
+    if (!res.ok) throw new Error(d.error || res.statusText);
+    r.text = d.text; r.checked = true;
+    if (text !== '?' && !d.hop_le) toast(`Đã lưu "${text}" (lưu ý: không khớp định dạng biển VN)`);
+    S.cur = nextTodo(S.cur); render();
+  } catch (e){ toast('Lỗi lưu: ' + e.message); }
+}
+
+$('#save').onclick = () => save($('#text').value);
+$('#unread').onclick = () => save('?');
+$('#prev').onclick = () => go(S.cur - 1);
+$('#next').onclick = () => go(S.cur + 1);
+$('#list').onclick = e => { const b = e.target.closest('.it'); if (b) go(+b.dataset.i); };
+$('#tabs').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  S.filter = b.dataset.f;
+  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+  const V = visible(); if (V.length && !V.some(r => r.i === S.cur)) S.cur = V[0].i;
+  render();
+};
+$('#text').addEventListener('keydown', e => {
+  if (e.key === 'Enter'){ e.preventDefault(); save($('#text').value); }
+  else if (e.key === 'Escape'){ e.preventDefault(); save('?'); }
+});
+document.addEventListener('keydown', e => {
+  if (e.altKey && e.key === 'ArrowLeft'){ e.preventDefault(); go(S.cur - 1); }
+  else if (e.altKey && e.key === 'ArrowRight'){ e.preventDefault(); go(S.cur + 1); }
+});
+load().catch(() => toast('Không kết nối được máy chủ'));
+</script>
+</body>
+</html>

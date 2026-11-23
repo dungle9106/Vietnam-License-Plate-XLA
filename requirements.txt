@@ -1,0 +1,26 @@
+# Nhận diện biển số xe VN: YOLOv8s (phát hiện biển) + PaddleOCR (đọc ký tự). Python 3.13.
+#   pip install -r requirements.txt
+#   pip install --no-deps opencv-contrib-python==5.0.0.93   (xem ghi chú OpenCV bên dưới)
+
+# YOLOv8 phát hiện biển số (kéo theo PyTorch)
+ultralytics>=8.3.0
+
+# PaddleOCR đọc ký tự. PaddlePaddle 3.3 cần numpy < 2.4
+paddlepaddle==3.3.1
+paddleocr==3.7.0
+numpy>=1.24,<2.4
+
+# OpenCV: PaddleX (đi kèm paddleocr) đòi gói opencv-contrib-python và tự kéo bản 4.10 về, ghi đè
+# cv2 của opencv-python -> cài opencv-contrib-python CÙNG phiên bản với opencv-python, dùng --no-deps.
+opencv-python==5.0.0.93
+
+pillow
+matplotlib
+# Xuất Excel
+openpyxl
+# Web app
+flask
+# Tải bộ dữ liệu Kaggle (scripts/prepare_dataset.py, notebooks)
+kagglehub
+# Tuỳ chọn: giúp Ultralytics thêm augmentation blur/noise khi train YOLO
+albumentations
