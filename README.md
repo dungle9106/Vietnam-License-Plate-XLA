@@ -55,7 +55,7 @@ notebooks/
 tests/                     Kiểm thử (dữ liệu giả lập, không cần tập dữ liệu)
 weights/best.pt            Mô hình YOLOv8s đã huấn luyện
 weights/paddle_rec/        (tuỳ chọn) mô hình PaddleOCR đã tinh chỉnh - có thì tự dùng
-data/lp_full/              Toàn bộ dữ liệu YOLO đã chia train/val/test (tải lại bằng kagglehub)
+data/lp_full/              Dữ liệu YOLO đã chia train/val/test (nguồn Kaggle tanhphp/vietnamese-license-plates)
 data/ocr_labels/           Biển số đã cắt + đáp án gán nhãn tay (labels.csv)
 Bo_anh_test_nhan_dien_bien_so/   Ảnh thử nghiệm
 ```

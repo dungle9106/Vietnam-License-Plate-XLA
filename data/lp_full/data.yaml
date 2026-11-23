@@ -1,0 +1,6 @@
+# Không ghi 'path': Ultralytics lấy thư mục chứa file này làm gốc -> chạy được trên mọi máy
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: license_plate

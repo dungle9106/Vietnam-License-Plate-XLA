@@ -114,8 +114,9 @@ def main():
             stats[sp] += 1
             stats[f"{sp}_boxes"] += len(boxes)
 
-    yaml = (f"path: {out.resolve().as_posix()}\ntrain: images/train\nval: images/val\n"
-            f"test: images/test\nnames:\n  0: license_plate\n")
+    # Không ghi 'path' (đường dẫn tuyệt đối của máy): Ultralytics tự lấy thư mục chứa data.yaml làm gốc,
+    # nên thư mục dữ liệu chép sang máy khác / đưa lên GitHub vẫn dùng được.
+    yaml = "train: images/train\nval: images/val\ntest: images/test\nnames:\n  0: license_plate\n"
     (out / "data.yaml").write_text(yaml, encoding="utf-8")
 
     print(f"Class id gốc trong nhãn: {dict(cls_count)}")
