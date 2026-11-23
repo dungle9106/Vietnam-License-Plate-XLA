@@ -1,19 +1,10 @@
-# Nhận diện biển số xe Việt Nam — Nhóm 08
+# Nhận diện biển số xe Việt Nam 
 
 Học phần: Xử lý ảnh và thị giác máy tính (GV: Hồ Văn Quí)
 
 Pipeline: **ảnh / video → YOLOv8s phát hiện biển số → cắt vùng biển (từ ảnh gốc độ phân giải cao) → tiền xử lý OpenCV + nắn thẳng → PaddleOCR đọc ký tự → hậu xử lý theo định dạng biển VN → Web / ứng dụng desktop / Excel**
 
-## Kết quả đo
 
-| Giai đoạn | Dữ liệu | Kết quả |
-|---|---|---|
-| Phát hiện biển (YOLOv8s, ảnh 960 px) | 74 ảnh gốc tập test, 99 biển | tìm thấy 96/99 (97.0%) |
-| Phát hiện biển (YOLOv8s, toàn tập test 182 ảnh, có ảnh tăng cường) | `scripts/eval_detector.py` | precision 96.8%, recall 93.0%, mAP50 96.7% |
-| Đọc ký tự — ảnh tĩnh (PaddleOCR bản chính xác) | 98 biển có đáp án (tập test) | đúng cả biển **88.8%**, lỗi ký tự 2.6% |
-| Đọc ký tự — video / webcam (PaddleOCR bản nhanh) | cùng 98 biển | đúng cả biển 87.8%, lỗi ký tự 3.8% |
-
-Biển cao ≥ 60 px đọc đúng ~96%, biển nhỏ / mờ hơn ~71% — giao diện tự cảnh báo khi ảnh biển nhỏ hoặc mờ.
 
 ## Tính năng
 
