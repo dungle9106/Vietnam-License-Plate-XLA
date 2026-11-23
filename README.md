@@ -1,7 +1,5 @@
 # Nhận diện biển số xe Việt Nam 
 
-Học phần: Xử lý ảnh và thị giác máy tính (GV: Hồ Văn Quí)
-
 Pipeline: **ảnh / video → YOLOv8s phát hiện biển số → cắt vùng biển (từ ảnh gốc độ phân giải cao) → tiền xử lý OpenCV + nắn thẳng → PaddleOCR đọc ký tự → hậu xử lý theo định dạng biển VN → Web / ứng dụng desktop / Excel**
 
 
