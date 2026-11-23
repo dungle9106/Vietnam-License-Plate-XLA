@@ -6,7 +6,7 @@ Sau đó mở trang gán nhãn  http://127.0.0.1:5000/label  (chạy python web/
 để xem từng biển, sửa chữ cho đúng rồi bấm Enter.
 
 Nguồn ảnh (dùng được nhiều nguồn trong 1 lần chạy, chạy lại nhiều lần để bổ sung dần):
-    python scripts/export_ocr_labels.py --split test                 # data/lp/images/test, box theo nhãn YOLO
+    python scripts/export_ocr_labels.py --split test                 # data/lp_full/images/test, box theo nhãn YOLO
     python scripts/export_ocr_labels.py --images "D:/anh_bien_so"    # thư mục ảnh bất kỳ (quét cả thư mục con)
     python scripts/export_ocr_labels.py --video xe.mp4 --every 0.5   # cắt biển từ video, 0.5 s lấy 1 khung
 
@@ -118,8 +118,8 @@ def iter_images(folder, recursive=True):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--data-dir", default="data/lp")
-    ap.add_argument("--split", default=None, help="Lấy ảnh data/lp/images/<split> với box theo nhãn YOLO")
+    ap.add_argument("--data-dir", default="data/lp_full")
+    ap.add_argument("--split", default=None, help="Lấy ảnh data/lp_full/images/<split> với box theo nhãn YOLO")
     ap.add_argument("--images", action="append", default=[], help="Thư mục ảnh bất kỳ (lặp lại được)")
     ap.add_argument("--video", action="append", default=[], help="File video (lặp lại được)")
     ap.add_argument("--every", type=float, default=0.5, help="Video: cách bao nhiêu giây lấy 1 khung")

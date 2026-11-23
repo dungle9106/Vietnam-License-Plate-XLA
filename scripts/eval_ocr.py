@@ -22,7 +22,7 @@ from lpr.plate_format import normalize  # noqa: E402
 
 def label_split(row):
     """Biển thuộc tập nào: 'train' / 'val' (cắt từ data/lp_full/images/train|val - dùng để tinh chỉnh
-    PaddleOCR) hay 'test' (data/lp/images/test, Bo_anh_test_..., video/ảnh riêng - chỉ dùng để đo)."""
+    PaddleOCR) hay 'test' (data/lp_full/images/test, Bo_anh_test_..., video/ảnh riêng - chỉ dùng để đo)."""
     img = row["image"].replace("\\", "/")
     for s in ("train", "val"):
         if f"/images/{s}/" in img:

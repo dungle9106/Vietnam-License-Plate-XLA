@@ -7,7 +7,7 @@
   (tên dạng 'abc_jpg.rf.<hash>.jpg') của cùng 1 ảnh gốc trong cùng 1 tập.
 
 Ví dụ:
-    python scripts/prepare_dataset.py --src raw/kaggle raw/roboflow --out data/lp
+    python scripts/prepare_dataset.py --src raw/kaggle raw/roboflow --out data/lp_full
 """
 import argparse
 import hashlib
@@ -60,7 +60,7 @@ def group_key(img_path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--src", nargs="+", required=True, help="Thư mục dataset nguồn (YOLO format)")
-    ap.add_argument("--out", default="data/lp")
+    ap.add_argument("--out", default="data/lp_full")
     ap.add_argument("--split", nargs=3, type=float, default=[0.7, 0.2, 0.1])
     ap.add_argument("--classes", nargs="*", type=int, default=None,
                     help="Chỉ giữ các class id này (mặc định giữ tất cả, gộp thành 1 lớp)")

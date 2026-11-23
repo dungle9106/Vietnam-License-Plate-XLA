@@ -2,7 +2,7 @@
 
     python scripts/visualize.py steps --image anh.jpg                  # các bước xử lý 1 ảnh
     python scripts/visualize.py steps --image anh.jpg --weights weights/best.pt
-    python scripts/visualize.py dataset --data-dir data/lp            # thống kê dữ liệu
+    python scripts/visualize.py dataset --data-dir data/lp_full            # thống kê dữ liệu
     python scripts/visualize.py ocr-errors --errors runs/ocr_errors.csv
 """
 import argparse
@@ -61,7 +61,7 @@ def main():
     p.add_argument("--weights", default="weights/best.pt")
     p.set_defaults(func=cmd_steps)
     p = sub.add_parser("dataset", help="Thống kê tập dữ liệu đã chia")
-    p.add_argument("--data-dir", default="data/lp")
+    p.add_argument("--data-dir", default="data/lp_full")
     p.set_defaults(func=cmd_dataset)
     p = sub.add_parser("ocr-errors", help="Phân tích lỗi OCR từ eval_ocr.py")
     p.add_argument("--errors", default="runs/ocr_errors.csv")

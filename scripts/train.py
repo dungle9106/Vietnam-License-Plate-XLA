@@ -1,7 +1,7 @@
 """Huấn luyện YOLOv8 phát hiện biển số -> weights/best.pt.
 
 Ví dụ (nên chạy trên GPU Colab/Kaggle, xem notebooks/train_colab.ipynb):
-    python scripts/train.py --data data/lp/data.yaml --model yolov8s.pt --epochs 100
+    python scripts/train.py --data data/lp_full/data.yaml --model yolov8s.pt --epochs 100
 """
 import argparse
 import sys
@@ -17,7 +17,7 @@ import lpr  # noqa: E402,F401  (cấu hình in UTF-8 trên Windows)
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data", default="data/lp/data.yaml")
+    ap.add_argument("--data", default="data/lp_full/data.yaml")
     ap.add_argument("--model", default="yolov8s.pt", help="yolov8n/s/m.pt (n nhanh nhất, m chính xác hơn)")
     ap.add_argument("--epochs", type=int, default=100)
     ap.add_argument("--imgsz", type=int, default=640)

@@ -1,7 +1,7 @@
 """Giai đoạn 1: phát hiện vùng biển số bằng YOLOv8.
 
 Kích thước ảnh đưa vào YOLO (imgsz): YOLO thu nhỏ mọi ảnh về imgsz trước khi tìm, nên biển trong
-ảnh lớn bị co lại quá nhỏ. Đo trên 74 ảnh gốc data/lp/images/test (99 biển, ngưỡng 0.4):
+ảnh lớn bị co lại quá nhỏ. Đo trên 74 ảnh gốc data/lp_full/images/test (99 biển, ngưỡng 0.4):
     imgsz 640 : tìm thấy 92/99 (92.9%)  ~0.15 s/ảnh CPU   <- video / webcam (FAST_IMGSZ)
     imgsz 960 : tìm thấy 96/99 (97.0%)  ~0.33 s/ảnh       <- ảnh tĩnh (mặc định)
     imgsz 1280: tìm thấy 97/99 (98.0%)  ~0.59 s/ảnh, số vùng ngoài nhãn tăng gấp đôi

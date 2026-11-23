@@ -55,7 +55,6 @@ notebooks/
 tests/                     Kiểm thử (dữ liệu giả lập, không cần tập dữ liệu)
 weights/best.pt            Mô hình YOLOv8s đã huấn luyện
 weights/paddle_rec/        (tuỳ chọn) mô hình PaddleOCR đã tinh chỉnh - có thì tự dùng
-data/lp/                   Tập test YOLO (ảnh + nhãn khung biển)
 data/lp_full/              Toàn bộ dữ liệu YOLO đã chia train/val/test (tải lại bằng kagglehub)
 data/ocr_labels/           Biển số đã cắt + đáp án gán nhãn tay (labels.csv)
 Bo_anh_test_nhan_dien_bien_so/   Ảnh thử nghiệm
@@ -119,7 +118,7 @@ tải dữ liệu Kaggle [tanhphp/vietnamese-license-plates](https://www.kaggle.
 ```bash
 python scripts/prepare_dataset.py --src <thư mục dữ liệu Kaggle> --out data/lp_full
 python scripts/train.py --data data/lp_full/data.yaml --model yolov8s.pt --epochs 100 --device 0
-python scripts/eval_detector.py --weights weights/best.pt --data data/lp/data.yaml
+python scripts/eval_detector.py --weights weights/best.pt --data data/lp_full/data.yaml
 ```
 
 Chia dữ liệu dùng hạt giống cố định (`--seed 42`) nên chia lại luôn ra đúng tập test cũ.

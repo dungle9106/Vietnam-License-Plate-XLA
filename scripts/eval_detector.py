@@ -1,6 +1,6 @@
 """Đánh giá mô hình phát hiện trên tập test: Precision, Recall, mAP@0.5, mAP@0.5:0.95.
 
-    python scripts/eval_detector.py --weights weights/best.pt --data data/lp/data.yaml
+    python scripts/eval_detector.py --weights weights/best.pt --data data/lp_full/data.yaml
 """
 import argparse
 import sys
@@ -17,7 +17,7 @@ import lpr  # noqa: E402,F401  (cấu hình in UTF-8 trên Windows)
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--weights", default="weights/best.pt")
-    ap.add_argument("--data", default="data/lp/data.yaml")
+    ap.add_argument("--data", default="data/lp_full/data.yaml")
     ap.add_argument("--split", default="test")
     ap.add_argument("--imgsz", type=int, default=640)
     ap.add_argument("--device", default=None)

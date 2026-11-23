@@ -31,7 +31,7 @@ def main():
 
     by_image = defaultdict(dict)
     for r in load_labels(args.labels):
-        # Chỉ ảnh có nhãn box YOLO (data/lp/images/<split>) mới đo end-to-end được;
+        # Chỉ ảnh có nhãn box YOLO (data/lp_full/images/<split>) mới đo end-to-end được;
         # biển lấy từ --images / --video thì box do chính YOLO tìm -> chỉ dùng cho eval_ocr.py
         if "/images/" not in r["image"].replace("\\", "/") or "@" in r["image"]:
             continue
